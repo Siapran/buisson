@@ -62,7 +62,7 @@ weblit.app
 		path = "/api/:name:",
 		method = "GET"
 	}, function (req, res)
-		local api_request = api.GET[req.params.name] or api.POST[req.params.name]
+		local api_request = api.GET[req.params.name] -- or api.POST[req.params.name]
 		p(req.query)
 		if api_request then
 			res.body = json.stringify(api_request(req.query))

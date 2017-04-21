@@ -9,6 +9,54 @@
 	<body>
 		<div class="container">
 			<div class="row">
+				<h2>Comptes</h2>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nom</th>
+							<th>Solde</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for _, account in ipairs(accounts) do %}
+							<tr>
+								<td>{{account.account_id}}</td>
+								<td>{{account.account_name}}</td>
+								<td>{{account.account_balance}}</td>
+							</tr>
+						{% end %}
+					</tbody>
+				</table>
+			</div>
+			<div class="row">
+				<h2>Transactions</h2>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Date</th>
+							<th>Source</th>
+							<th>Destination</th>
+							<th>Montant</th>
+							<th>Libellé</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for _, transaction in ipairs(transactions) do %}
+							<tr>
+								<td>{{transaction.transaction_id}}</td>
+								<td>{{transaction.transaction_datetime}}</td>
+								<td>{{transaction.transaction_source}}</td>
+								<td>{{transaction.transaction_destination}}</td>
+								<td>{{transaction.transaction_amount}}</td>
+								<td>{{transaction.transaction_label}}</td>
+							</tr>
+						{% end %}
+					</tbody>
+				</table>
+			</div>
+			<div class="row">
 				<form class="well form-horizontal" action="/api/user" method="post"  id="create_user">
 					<fieldset>
 						<legend>Créer un compte</legend>
@@ -83,7 +131,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
-									<input  name="amount" placeholder="42424242" class="form-control"  type="text">
+									<input  name="amount" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
@@ -92,7 +140,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class=" glyphicon glyphicon-pencil"></i></span>
-									<input  name="label" placeholder="Taxes suck :<" class="form-control"  type="text">
+									<input  name="label" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
@@ -126,7 +174,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
-									<input  name="amount" placeholder="42424242" class="form-control"  type="text">
+									<input  name="amount" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
@@ -135,7 +183,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class=" glyphicon glyphicon-pencil"></i></span>
-									<input  name="label" placeholder="Taxes suck :<" class="form-control"  type="text">
+									<input  name="label" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
@@ -169,7 +217,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
-									<input  name="amount" placeholder="42424242" class="form-control"  type="text">
+									<input  name="amount" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
@@ -178,7 +226,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class=" glyphicon glyphicon-pencil"></i></span>
-									<input  name="label" placeholder="Taxes suck :<" class="form-control"  type="text">
+									<input  name="label" placeholder="" class="form-control"  type="text">
 								</div>
 							</div>
 						</div>
