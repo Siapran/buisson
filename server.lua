@@ -12,6 +12,11 @@ weblit.app
 		port = 8080
 	})
 
+	.bind({
+		host = "0.0.0.0",
+		port = 4269
+	})
+
 	-- Configure weblit server
 	.use(weblit.logger)
 	.use(weblit.autoHeaders)
