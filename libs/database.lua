@@ -60,7 +60,9 @@ local function create_user( id, name, balance )
 	stmt:reset():bind(id, name, 0):step()
 	stmt:close()
 	print("Created account " .. name .. " with id " .. (id or "NULL"))
-	deposit(id, balance, "Initial balance")
+	if balance and balance ~= 0 then
+		transfer(nil, id, balance, "Initial balance")
+	end
 end
 
 init_db()

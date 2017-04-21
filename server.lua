@@ -1,9 +1,9 @@
--- local _require = loadstring('return require')() -- Get the real require back :<
 local weblit = require("weblit")
 local template = require("resty/template")
 local mime = require("mime")
 local json = require("json")
 local api = require("api")
+local parse_query = require('querystring').parse
 
 weblit.app
 
@@ -20,7 +20,7 @@ weblit.app
 
 	.route({
 		path = "/static/:path:"
-	}, weblit.static("/home/siapran/Programming/Lua/buisson/static/"))
+	}, weblit.static("./static/"))
 
 	-- A custom route that sends back method and part of url.
 	.route({
@@ -30,7 +30,9 @@ weblit.app
 		local file = "html/index.html"
 		res.body = template.compile(file)({
 			method = req.method,
-			path = req.path
+			path = req.path,
+			accounts = api.GET.accounts(),
+			transactions = api.GET.transactions(),
 		})
 		res.code = 200
 		res.headers["Content-Type"] = mime.getType(file)
@@ -40,28 +42,29 @@ weblit.app
 		path = "/api/:name:",
 		method = "POST"
 	}, function (req, res)
-		local file = "html/index.html"
-		res.body = "OK"
-		res.code = 200
-		res.headers["Content-Type"] = mime.getType("text")
+		local api_request = api.POST[req.params.name]
+		p(req.body)
+		local query = parse_query(req.body)
+		p(query)
+		if api_request then
+			api_request(query)
+			res.code = 302
+			res.headers.Location = "/"
+		end
 	end)
 
 	.route({
 		path = "/api/:name:",
 		method = "GET"
 	}, function (req, res)
-		local api_request = api.GET[req.params.name]
+		local api_request = api.GET[req.params.name] or api.POST[req.params.name]
+		p(req.query)
 		if api_request then
-			res.body = json.stringify(api_request())
+			res.body = json.stringify(api_request(req.query))
 			res.code = 200
 			res.headers["Content-Type"] = mime.getType("json")
-		else
-			res.body = "Not found"
-			res.code = 404
-			res.headers["Content-Type"] = mime.getType("text")
 		end
 	end)
-
 
 	.websocket({
 		path = "/socket", -- Prefix for matching
