@@ -20,7 +20,7 @@ weblit.app
 	-- Configure weblit server
 	.use(weblit.logger)
 	.use(weblit.autoHeaders)
-	-- .use(weblit.etagCache)
+	.use(weblit.etagCache)
 	.use(weblit.cors)
 
 	.route({
