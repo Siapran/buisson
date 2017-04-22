@@ -7,6 +7,12 @@
 		<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css'>
 	</head>
 	<body>
+		<div class="jumbotron">
+			<div class="container">
+				<img src="static/img/logo.svg"/>
+				<h3>Faut bien fourrer notre argent quelquepart...</h3>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<h2>Comptes</h2>
@@ -22,7 +28,11 @@
 						{% for _, account in ipairs(accounts) do %}
 							<tr>
 								<td>{{account.account_id}}</td>
-								<td>{{account.account_name}}</td>
+								<td>
+									<a href="http://wjdr.la-haute-tour.info/v2/affiche_perso.php?id={{account.account_id}}">
+										{{account.account_name}}
+									</a>
+								</td>
 								<td>{{account.account_balance}}</td>
 							</tr>
 						{% end %}
@@ -239,6 +249,6 @@
 					</fieldset>
 				</form>
 			</div>
-		</div><!-- /.container -->
-	</body>
-</html>
+			</div><!-- /.container -->
+		</body>
+	</html>
