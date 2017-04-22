@@ -1,0 +1,9 @@
+.thumbnail img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.custom-icon {
+	width: 1em;
+	height: 1em;
+}
