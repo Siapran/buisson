@@ -2,10 +2,12 @@ local sql = require("sqlite3")
 local type = type
 local tonumber = tonumber
 
-local conn = sql.open("db/buisson.db")
+local conn
 
 
 local function init_db( )
+	conn = sql.open("db/buisson.db")
+	conn:exec("PRAGMA foreign_keys = ON;")
 	local t, n =
 		conn:exec("select name from sqlite_master where type = 'table'")
 	if n ~= 2 then
