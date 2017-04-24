@@ -4,6 +4,7 @@ local mime = require("mime")
 local json = require("json")
 local api = require("api")
 local parse_query = require('querystring').parse
+local socket = require("socket")
 
 weblit.app
 
@@ -74,17 +75,7 @@ weblit.app
 	.websocket({
 		path = "/socket", -- Prefix for matching
 		protocol = "echo", -- Restrict to a websocket sub-protocol
-	}, function (req, read, write)
-		-- Log the request headers
-		p(req)
-		-- Log and echo all messages
-		for message in read do
-			p(message)
-			write(message)
-		end
-		-- End the stream
-		write()
-	end)
+	}, socket.client_connection)
 
 	-- Start the server
 	.start()
