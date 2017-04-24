@@ -15,6 +15,7 @@ local function bind_param( key_list, func )
 			else
 				param = value_map[key]
 			end
+			if param == "" then param = nil end
 			params[index] = param
 		end
 		return func(unpack(params))
