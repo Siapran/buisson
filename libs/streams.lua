@@ -2,7 +2,7 @@ local Stream = {}
 
 -- The low level stream constructor receives a generator function
 -- similar to the one coroutine.wrap would return. You could change the API
--- to something returning multiple values, like ipairs does. 
+-- to something returning multiple values, like ipairs does.
 function Stream:new(gen)
 	local stream = { _next = gen }
 	setmetatable(stream, self)

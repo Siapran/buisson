@@ -1,0 +1,43 @@
+<form class="well form-horizontal" action="/api/deposit" method="post"  id="deposit">
+				<fieldset>
+					<legend>Déposer de l'argent</legend>
+					<div class="form-group">
+						<label class="col-md-4 control-label">Compte destination</label>
+						<div class="col-md-8 selectContainer">
+							<div class="input-group">
+								<span class="input-group-addon"><i class=" glyphicon glyphicon-arrow-down"></i></span>
+								<select name="destination" class="form-control selectpicker" >
+									<option value="" >Sélectionner un compte destination</option>
+									{% for _, account in ipairs(accounts) do %}
+										<option value="{{account.account_id}}">{{account.account_name}}</option>
+									{% end %}
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">Montant</label>
+						<div class="col-md-8 inputGroupContainer">
+							<div class="input-group">
+								<span class="input-group-addon"><img class="custom-icon" src="static/img/coins.svg"/></i></span>
+								<input  name="amount" placeholder="" class="form-control"  type="text">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label">Libellé</label>
+						<div class="col-md-8 inputGroupContainer">
+							<div class="input-group">
+								<span class="input-group-addon"><img class="custom-icon" src="static/img/parchment.svg"></i></span>
+								<input  name="label" placeholder="" class="form-control"  type="text">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-4 control-label"></label>
+						<div class="col-md-8">
+							<button type="submit" class="btn btn-warning" ><span class=" glyphicon glyphicon-arrow-down"></span> Déposer</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>

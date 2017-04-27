@@ -1,0 +1,38 @@
+<form class="well form-horizontal" action="/api/user" method="post"  id="create_user">
+	<fieldset>
+		<legend>Créer un compte</legend>
+		<div class="form-group">
+			<label class="col-md-4 control-label">ID</label>
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input  name="id" placeholder="" class="form-control"  type="text">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-4 control-label">Nom</label>
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+					<input  name="name" placeholder="" class="form-control"  type="text">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-4 control-label">Solde initial</label>
+			<div class="col-md-8 inputGroupContainer">
+				<div class="input-group">
+					<span class="input-group-addon"><img class="custom-icon" src="static/img/coins.svg"/></i></span>
+					<input  name="balance" placeholder="" class="form-control"  type="text">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-4 control-label"></label>
+			<div class="col-md-8">
+				<button type="submit" class="btn btn-warning" ><span class="glyphicon glyphicon-plus"></span> Créer le compte</button>
+			</div>
+		</div>
+	</fieldset>
+</form>

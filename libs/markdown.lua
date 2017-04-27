@@ -3,13 +3,14 @@ local hd = require("hoedown")
 
 local flags = hd.HOEDOWN_HTML_ESCAPE
 local extensions = bit.bor(
-  hd.HOEDOWN_EXT_BLOCK,
-  hd.HOEDOWN_EXT_SPAN
+	hd.HOEDOWN_EXT_BLOCK,
+	hd.HOEDOWN_EXT_SPAN
 )
+local renderer = hd.hoedown_html_renderer_new(flags, 0)
+local document = hd.hoedown_document_new(renderer, extensions, 16);
 
 return function ( markdown )
-	local renderer = hd.hoedown_html_renderer_new(flags, 0)
-	local document = hd.hoedown_document_new(renderer, extensions, 16);
+	if not markdown then return end
 	local html = hd.hoedown_buffer_new(16)
 
 	hd.hoedown_document_render(document, html, markdown, #markdown);
@@ -21,8 +22,9 @@ return function ( markdown )
 
 	hd.hoedown_buffer_free(html)
 	hd.hoedown_buffer_free(output)
-	hd.hoedown_document_free(document)
-	hd.hoedown_html_renderer_free(renderer)
 
 	return string
 end
+
+-- hd.hoedown_document_free(document)
+-- hd.hoedown_html_renderer_free(renderer)

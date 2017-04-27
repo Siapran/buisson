@@ -4,7 +4,7 @@ local clients = {}
 local function client_connection (req, read, write)
 	-- Log the request headers
 	p("New client", req.socket)
-	
+
 	-- Log and echo all messages
 	for message in read do
 		p(message)

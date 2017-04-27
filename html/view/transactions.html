@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="row">
+		<h2>Comptes</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nom</th>
+					<th>Solde</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for _, account in ipairs(accounts) do %}
+					<tr>
+						<td>{{account.account_id}}</td>
+						<td>
+							<a href="http://wjdr.la-haute-tour.info/v2/affiche_perso.php?id={{account.account_id}}">
+								{{account.account_name}}
+							</a>
+						</td>
+						<td>{{account.account_balance}}</td>
+					</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<h2>Transactions</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Date</th>
+					<th>Source</th>
+					<th>Destination</th>
+					<th>Montant</th>
+					<th>Libellé</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for _, transaction in ipairs(transactions) do %}
+					<tr>
+						<td>{{transaction.transaction_id}}</td>
+						<td>{{transaction.transaction_datetime}}</td>
+						<td>{{transaction.transaction_source}}</td>
+						<td>{{transaction.transaction_destination}}</td>
+						<td>{{transaction.transaction_amount}}</td>
+						<td>{{transaction.transaction_label}}</td>
+					</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-sm-6">
+			{(html/form/create_user.html)}
+		</div>
+		<div class="col-md-6 col-sm-6">
+			{(html/form/transfer.html)}
+		</div>
+		<div class="col-md-6 col-sm-6">
+			{(html/form/deposit.html)}
+		</div>
+		<div class="col-md-6 col-sm-6">
+			{(html/form/withdraw.html)}
+		</div>
+	</div>
+</div>

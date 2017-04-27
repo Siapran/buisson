@@ -1,6 +1,10 @@
 /* space for fixed navbar */
 body {
-	padding-top: 50px;
+	padding-top: 70px;
+}
+
+.jumbotron {
+	margin-top: -20px;
 }
 
 .thumbnail img {
@@ -17,4 +21,3 @@ body {
 	width: 1em;
 	height: 1em;
 }
-
