@@ -9,6 +9,7 @@
 			<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/">Buisson</a>
+			<!-- <a class="navbar-brand" href="/"><img src="/static/img/logo-inverse.svg"/></a> -->
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
@@ -16,7 +17,13 @@
 					<li{% if path == item.path then %}
 						class="active"
 					{% end %}>
-						<a href="{{item.path}}">{{item.name}}</a>
+						<a href="{{item.path}}">
+							{% if item.icon then %}
+								<img class="brand-logo" src="{{item.icon}}"/>
+							{% else %}
+								{{item.name}}
+							{% end %}
+						</a>
 					</li>
 				{% end %}
 				<!-- <li class="dropdown">

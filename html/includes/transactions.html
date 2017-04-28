@@ -1,0 +1,25 @@
+<h2>Transactions</h2>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Date</th>
+			<th>Source</th>
+			<th>Destination</th>
+			<th>Montant</th>
+			<th>Libellé</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for _, transaction in ipairs(transactions) do %}
+			<tr>
+				<td>{{transaction.transaction_id}}</td>
+				<td>{{transaction.transaction_datetime}}</td>
+				<td>{{transaction.transaction_source}}</td>
+				<td>{{transaction.transaction_destination}}</td>
+				<td>{{transaction.transaction_amount}}</td>
+				<td>{{transaction.transaction_label}}</td>
+			</tr>
+		{% end %}
+	</tbody>
+</table>

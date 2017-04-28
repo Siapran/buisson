@@ -14,16 +14,7 @@ local pages = require("pages")
 template.caching(false)
 
 local function page_get ( req, res, go )
-	-- local file = "html/layout.html"
-	-- local layout = template.new(file)
-
-	-- print("REACHED")
-
-	-- layout.method = req.method
-	-- layout.path = req.path
-	-- layout.accounts = api.GET.accounts()
-	-- layout.transactions = api.GET.transactions()
-	local page = pages(req, req.path)
+	local page = pages.page(req, req.path)
 	if not page then
 		return go()
 	end
@@ -33,8 +24,19 @@ local function page_get ( req, res, go )
 end
 
 local function not_found( req, res )
-	res.body = tostring(pages(req, 404))
+	res.body = tostring(pages.page(req, 404))
 	res.code = 404
+	res.headers["Content-Type"] = mime.getType("html")
+end
+
+local function view_get( req, res, go )
+	-- p(req.params.path)
+	local view = pages.view(req, "/" .. req.params.path)
+	if not view then
+		return
+	end
+	res.body = tostring(view)
+	res.code = 200
 	res.headers["Content-Type"] = mime.getType("html")
 end
 
@@ -62,6 +64,7 @@ end
 
 return {
 	page_get = page_get,
+	view_get = view_get,
 	api_post = api_post,
 	api_get = api_get,
 	not_found = not_found

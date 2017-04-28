@@ -21,3 +21,16 @@ body {
 	width: 1em;
 	height: 1em;
 }
+
+.navbar img {
+	height: 30px;
+	width: auto;
+}
+
+.navbar .nav a:hover {
+	background-image: -webkit-linear-gradient(top, #555 0%, #333 100%);  // Safari 5.1-6, Chrome 10+
+    background-image: -o-linear-gradient(top, #555 0%, #333 100%);  // Opera 12
+    background-image: linear-gradient(to bottom, #555 0%, #333 100%); // Standard, IE10, Firefox 16+, Opera 12.10+, Safari 7+, Chrome 26+
+    background-repeat: repeat-x;
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",argb(#555),argb(#333))); // IE9 and down
+}

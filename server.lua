@@ -2,7 +2,7 @@ local weblit = require("weblit")
 local socket = require("socket")
 local controller = require("controller")
 
-p(controller)
+-- p(controller)
 
 weblit.app
 
@@ -41,6 +41,11 @@ weblit.app
 		path = "/api/:name:",
 		method = "GET"
 	}, controller.api_get)
+
+	.route({
+		path = "/view/:path:",
+		method = "GET"
+	}, controller.view_get)
 
 	.websocket({
 		path = "/socket",
