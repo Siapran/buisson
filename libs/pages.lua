@@ -8,14 +8,15 @@ local function add_view( path, view )
 end
 
 local forms = {
-	{path = "/form/create_user", label = "Ajouter un compte"}, 
-	{path = "/form/transfer", label = "Transférer de l'argent"}, 
-	{path = "/form/deposit", label = "Déposer de l'argent"}, 
-	{path = "/form/withdraw", label = "Retirer de l'argent"}
+	{name = "create_user", label = "Ajouter un compte"}, 
+	{name = "transfer", label = "Transférer de l'argent"}, 
+	{name = "deposit", label = "Déposer de l'argent"}, 
+	{name = "withdraw", label = "Retirer de l'argent"}
 }
 for _,form in ipairs(forms) do
+	form.path = "/form/" .. form.name
 	add_view(form.path, {
-		view = "html" .. form.path .. ".html",
+		html = "html" .. form.path .. ".html",
 		context = function ()
 			return {
 				accounts = api.GET.accounts()
@@ -24,17 +25,17 @@ for _,form in ipairs(forms) do
 	})
 end
 
-add_view(404, {name = "404", view = "html/view/404.html"})
+add_view(404, {name = "404", html = "html/view/404.html"})
 
 add_view("/", {
 	name = "Home",
-	view = "html/view/home.html",
+	html = "html/view/home.html",
 	-- icon = "/static/img/parchment-inverse.svg",
 })
 
 add_view("/accounting", {
 	name = "Comptabilité",
-	view = "html/view/accounting.html",
+	html = "html/view/accounting.html",
 	-- icon = "/static/img/coins-inverse.svg",
 	context = function ()
 		return {
@@ -53,27 +54,37 @@ local navigation = {
 	-- views["/workshop"],
 }
 
+local function view_context( view )
+	return view.context
+		and (type(view.context) == "table" and view.context
+		or type(view.context) == "function" and view.context(req, path))
+end
+
 local function make_view( req, path )
 	local view = views[path]
 	if not view then return end
-	return template.compile(view.view)(view.context
-			and (type(view.context) == "table" and view.context
-			or type(view.context) == "function" and view.context(req, path)))
+	local res = template.new(view.html)
+	for k,v in pairs(view_context(view)) do
+		res[k] = v
+	end
+	return res
 end
 
 local function make_page( req, path )
-	local view = make_view(req, path)
+	local view = views[path]
 	if not view then return end
 
-	local layout = template.new("html/layout.html")
+	local page = template.new(view.html, "html/layout.html")
 
-	layout.method = req.method
-	layout.path = req.path
-	layout.nav = navigation
+	page.method = req.method
+	page.path = req.path
+	page.nav = navigation
 
-	layout.view = view
+	for k,v in pairs(view_context(view)) do
+		page[k] = v
+	end
 
-	return layout
+	return page
 end
 
 return {
