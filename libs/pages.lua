@@ -8,7 +8,7 @@ local function add_view( path, view )
 end
 
 local forms = {
-	{name = "create_user", label = "Ajouter un compte"}, 
+	{name = "create_user", label = "Créer un compte"}, 
 	{name = "transfer", label = "Transférer de l'argent"}, 
 	{name = "deposit", label = "Déposer de l'argent"}, 
 	{name = "withdraw", label = "Retirer de l'argent"}
@@ -80,8 +80,11 @@ local function make_page( req, path )
 	page.path = req.path
 	page.nav = navigation
 
-	for k,v in pairs(view_context(view)) do
-		page[k] = v
+	local context = view_context(view)
+	if context then
+		for k,v in pairs(context) do
+			page[k] = v
+		end
 	end
 
 	return page

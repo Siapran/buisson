@@ -42,13 +42,13 @@ end
 
 local function api_post ( req, res )
 	local api_request = api.POST[req.params.name]
-	-- p(req.body)
+	p(req)
 	local query = parse_query(req.body)
 	-- p(query)
 	if api_request then
 		api_request(query)
 		res.code = 302
-		res.headers.Location = "/"
+		res.headers.Location = req.headers.Referer or "/"
 	end
 end
 

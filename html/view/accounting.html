@@ -17,8 +17,7 @@
 	{(html/includes/transactions.html)}
 </div>
 <div id="modal-container">
-	<a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Trigger modal</a>
-	<div class="modal fade" id="modal-id">
+	<div class="modal fade" id="modal-template">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -27,10 +26,6 @@
 				</div>
 				<div class="modal-body">
 					
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -41,9 +36,55 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".make-modal").each(function(index, el) {
-			var elem_path = $(this).attr("href");
+			var elem_path = "/view" + $(this).attr("href");
+			var elem_target = $(this).attr("data-target");
+			var title = $(this).text();
 			$(this).attr("href", "#");
-			
+			$(this).one("click", function() {
+				var button = $(this);
+
+				console.log(elem_path);
+
+				$.ajax({
+					url: elem_path
+				})
+				.done(function(data) {
+					var template = $("#modal-template").clone();
+					template.attr("id", "modal-" + elem_target);
+					template.appendTo("#modal-container");
+
+					template.find(".modal-body").html(data);
+
+					var legend = template.find("legend");
+					if (legend.length > 0) {
+						legend = legend.first();
+						title = legend.text();
+						legend.remove()
+					}
+					template.find(".modal-header h4").text(title);
+
+					// template.find("form").on("submit", function(event) {
+					// 	event.preventDefault();
+					// 	$.post($(this).attr("action"), $(this).serialize(), function(data, textStatus, xhr) {
+					// 		/*optional stuff to do after success */
+					// 	});
+					// });
+
+					template.modal();
+					button.click(function() {
+						template.modal("show");
+					})
+				})
+				.fail(function() {
+					console.log("error");
+				})
+				.always(function() {
+					console.log("complete");
+				});
+				
+
+				
+			})
 		});
 	});
 </script>
