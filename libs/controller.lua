@@ -30,7 +30,6 @@ local function not_found( req, res )
 end
 
 local function view_get( req, res, go )
-	-- p(req.params.path)
 	local view = pages.view(req, "/" .. req.params.path)
 	if not view then
 		return
@@ -42,9 +41,7 @@ end
 
 local function api_post ( req, res )
 	local api_request = api.POST[req.params.name]
-	p(req)
 	local query = parse_query(req.body)
-	-- p(query)
 	if api_request then
 		api_request(query)
 		res.code = 302
@@ -54,7 +51,6 @@ end
 
 local function api_get ( req, res )
 	local api_request = api.GET[req.params.name] -- or api.POST[req.params.name]
-	-- p(req.query)
 	if api_request then
 		res.body = json.stringify(api_request(req.query))
 		res.code = 200
