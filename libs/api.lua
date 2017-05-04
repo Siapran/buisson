@@ -35,7 +35,7 @@ local function get_transactions( )
 end
 
 local function get_accounts( )
-	return table_query(("select * from accounts"))
+	return table_query("select * from accounts")
 end
 
 local package = {

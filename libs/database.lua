@@ -17,9 +17,10 @@ local function init_db( )
 	end
 end
 
-local function query( statement, keys, indexes )
-	if keys == nil then keys = true end
-	if indexes == nil then indexes = false end
+local function query( statement, mode )
+	mode = mode or "i"
+	local indexes = mode:match("i")
+	local keys = mode:match("k")
 	return coroutine.wrap(function ()
 		local stmt = conn:prepare(statement)
 		local row, names = stmt:step({}, {})
@@ -42,9 +43,9 @@ local function query( statement, keys, indexes )
 	end)
 end
 
-local function table_query( statement, keys, indexes )
+local function table_query( statement, mode )
 	local res = {}
-	for row in query(statement, keys, indexes) do
+	for row in query(statement, mode) do
 		res[#res + 1] = row
 	end
 	return res
