@@ -4,6 +4,7 @@ local query = database.query
 local table_query = database.table_query
 local type = type
 
+
 local function bind_param( key_list, func )
 	return function ( value_map )
 		if not value_map then return func() end
@@ -30,8 +31,10 @@ local deposit = bind_param({{nil}, "destination", "amount", "label"}, raw_transf
 
 local withdraw = bind_param({"source", {nil}, "amount", "label"}, raw_transfer)
 
+
+
 local function get_transactions( )
-	return table_query("select * from transactions")
+	return table_query("select * from transactions where transaction_amount < ? limit ?", {100, 5})
 end
 
 local function get_accounts( )

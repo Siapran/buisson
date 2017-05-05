@@ -1,4 +1,4 @@
-local sql = require("sqlite3")
+local sql = require("sqlite")
 local type = type
 local tonumber = tonumber
 
@@ -17,12 +17,13 @@ local function init_db( )
 	end
 end
 
-local function query( statement, mode )
-	mode = mode or "i"
+local function query( statement, bindlist, mode )
+	mode = mode or "k"
 	local indexes = mode:match("i")
 	local keys = mode:match("k")
 	return coroutine.wrap(function ()
 		local stmt = conn:prepare(statement)
+		if bindlist then stmt:reset():bind(unpack(bindlist)) end
 		local row, names = stmt:step({}, {})
 		if not names then return nil end
 		repeat
@@ -43,9 +44,9 @@ local function query( statement, mode )
 	end)
 end
 
-local function table_query( statement, mode )
+local function table_query( statement, bindlist, mode )
 	local res = {}
-	for row in query(statement, mode) do
+	for row in query(statement, bindlist, mode) do
 		res[#res + 1] = row
 	end
 	return res
