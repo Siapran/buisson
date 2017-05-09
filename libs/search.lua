@@ -86,6 +86,40 @@ function search_filters.source( table, arg )
 	return name_interpolator("transaction_destination", arg)
 end
 
+local function parse( str )
+	local res = {}
+	local field = ""
+	local value = ""
+	str = str .. " "
+	local newstr
+	while str ~= "" do
+		newstr = str:gsub("^%s*(%S-):", function ( token )
+			field = token
+			return ""
+		end, 1)
+		if newstr == str then error("parsing error") end
+		str = newstr
+		if str:sub(1, 1) == '"' then
+			newstr = str:gsub("^\"(.-)\"", function ( token )
+				value = token
+				return ""
+			end, 1)
+			if newstr == str then error("parsing error") end
+			str = newstr
+		else
+			newstr = str:gsub("^(%S+)", function ( token )
+				value = token
+				return ""
+			end, 1)
+			if newstr == str then error("parsing error") end
+			str = newstr
+		end
+		str = str:gsub("%s*", "", 1)
+		res[#res + 1] = {field = field, value = value}
+	end
+	return res
+end
+
 function parse_search( table, search_string )
-	-- body
+	args = parse(search_string)
 end
